@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.1.0/bootstrap-slider.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.1.0/css/bootstrap-slider.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#led').on('click', function()
+			{
+				if(this.value == 'Switch On LED')
+				{
+					$.ajax({url: "http://192.168.0.103:8080/?data=LED_ON"});
+					InitializeButton(false, this);
+				}
+				else
+				{
+					$.ajax({url: "http://192.168.0.103:8080/?data=LED_OFF"});
+					InitializeButton(true, this);
+				}
+			});
+			
+			$('#pwmled').on('click', function()
+			{
+				$.ajax({url: "http://192.168.0.103:8080/?data=LED_PWMALARM"});
+			});
+			
+			$('#rangebar').on('change', function()
+			{
+				$.ajax({url: "http://192.168.0.103:8080/?data=LED_PWM&value=" + this.value});
+			});
+			
+			$("#ex11").slider({step: 5, min: 0, max: 100});
+			
+			$("#ex11").on('slide', function(value)
+			{
+				$.ajax({url: "http://192.168.0.103:8080/?data=LED_PWM&value=" + value.value});
+			});
+			
+			function InitializeButton(status, element){
+				if(!status)
+				{
+					element.value = 'Switch Off LED';
+					element.className = 'btn btn-danger btn-lg';
+				}
+				else
+				{
+					element.value = 'Switch On LED';
+					element.className = 'btn btn-success btn-lg';
+				}
+			};
+		});
+	</script>
+</head>
+<body>
+	<div class='col-xs-4'>
+		<input type='button' id='led' class='btn btn-success btn-lg' value='Switch On LED' ></input>
+		<span><input type='button' id='pwmled' class='btn btn-danger btn-lg' value='Alarm' ></input></span>
+	</div>
+	<div class='col-xs-3'>
+	<span/><input id="ex11" type="text" data-slider-handle="custom"/>
+	</div>
+</body>
+</html>
