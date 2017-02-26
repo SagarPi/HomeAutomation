@@ -1,12 +1,12 @@
 var express=require('express');
-require('rpio');
+var rpio = require('rpio');
 var app=express();
 
 app.get('/switch',function (req,res) {
-if(req.query.switch==true)
+if(req.query.val==true)
     On();
+res.send("should switch On : " + req.query.val);
 })
-
 
 
 function On() {
