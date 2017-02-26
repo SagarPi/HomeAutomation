@@ -8,25 +8,25 @@ app.get('/switch',function (req,res) {
     console.log('set the output pin');
 
     if(req.query.val=='true')
-    On();
-else
-    Off();
-res.send("should switch On : " + req.query.val);
+        On();
+    else
+        Off();
+    res.send("should switch On : " + req.query.val);
 })
 
 
 
 function On() {
     check();
-            rpio.write(12, rpio.HIGH);
+    rpio.write(12, rpio.HIGH);
     console.log('pin value is high');
-check();
+    check();
 }
 
 
 function Off() {
     check();
-    rpio.write(12, rpio.HIGH);
+    rpio.write(12, rpio.LOW);
     console.log('pin value is high');
     check();
 }
