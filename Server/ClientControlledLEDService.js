@@ -3,19 +3,30 @@ var rpio = require('rpio');
 var app=express();
 
 app.get('/switch',function (req,res) {
-if(req.query.val==true)
+//if(req.query.val==true)
     On();
 res.send("should switch On : " + req.query.val);
 })
 
 
+
 function On() {
 
     rpio.mode(12, rpio.OUTPUT);
+    if(rpio.read(12) == rpio.LOW)
+        console.log("LED is OFF")
+    else
+        console.log("LED is ON")
 
       //  if(rpio.read(12) == rpio.LOW)
             rpio.write(12, rpio.HIGH);
-      //  else
+
+    if(rpio.read(12) == rpio.LOW)
+        console.log("LED is OFF")
+    else
+        console.log("LED is ON")
+
+    //  else
         //    console.log('LED already ON');
         //console.log('Value of Pin3 from Read Pin is ' + rpio.read(12));
 
