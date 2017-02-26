@@ -13,7 +13,8 @@ res.send("should switch On : " + req.query.val);
 function On() {
 
     console.log('inside on');
-    rpio.mode(12, rpio.OUTPUT);
+    rpio.open(12, rpio.OUTPUT, rpio.LOW);
+    // rpio.mode(12, rpio.OUTPUT);
     console.log('set the output pin');
     if(rpio.read(12) == rpio.LOW)
         console.log("LED is OFF");
